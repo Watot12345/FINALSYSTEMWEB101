@@ -40,7 +40,7 @@ if (isset($_POST['time_in'])) {
         $check_out_result = $con->query("SELECT * FROM users WHERE user_id = '$user_id' AND date = '$date' AND check_out_time IS NOT NULL");
     
         if ($check_out_result->num_rows > 0) {
-            echo "You have already checked out today!";
+            echo '<span style="color: red;">You have already checked out today!</span>';
         } else {
             // User has not checked out yet, check if it's after 5:00 PM (time out logic)
             $check_out_time = '17:00:00'; // The expected check-out time
@@ -54,7 +54,7 @@ if (isset($_POST['time_in'])) {
                 $status = "Overtime";
                 $update_overtime = "UPDATE users SET check_out_time = '$check_out_time', status = '$status' WHERE user_id = '$user_id' AND date = '$date'";
                 $con->query($update_overtime);
-                echo "You are checking out overtime!";
+                echo '<span style="color: yellow;">You are checking out overtime!</span>';
             }
         }
     } else {
@@ -62,14 +62,15 @@ if (isset($_POST['time_in'])) {
         if ($check_in_time == '08:00:00') {
             // Time-in is exactly 8:00 AM
             $status = 'On Time';
-            echo "time-in successfully";
+            echo '<span style="color: rgb(0, 255, 0) ;">time-in successfully</span>';
         } else if ($check_in_time < '08:00:00') {
             // Time-in is before 8:00 AM (Under Time)
             $status = 'Under Time';
-            echo"time-in successfully";
+            echo '<span style="color: rgb(0, 255, 0) ;">time-in successfully</span>';
+            
         } else if ($check_in_time > '08:00:00') {
           $status = 'late';
-          echo "time-in successfully";
+          echo '<span style="color: rgb(0, 255, 0) ;">time-in successfully</span>';
         }
     
         // Insert the check-in record into the database
@@ -77,9 +78,9 @@ if (isset($_POST['time_in'])) {
                            VALUES ('$user_id', '', '', '$full_name', '$date', '$check_in_time', '$status',NULL,NULL,NULL,NULL)";
     
         if ($con->query($insert_time_in) === TRUE) {
-            echo "Check-in recorded successfully!";
+            echo '<span style="color: rgb(0, 255, 0) ;">time-in recorded successfully</span>';
         } else {
-            echo "Error: " . $con->error; // Output error message if query fails
+            echo '<span style="color: red;">Error: ' . $con->error . '</span>'; // Output error message if query fails
         }
     }
     
@@ -95,14 +96,14 @@ if (isset($_POST['time_out'])) {
     $check_out_result = $con->query($check_out_query);
 
     if ($check_out_result->num_rows == 0) {
-        echo "You haven't checked in today or already checked out!";
+      echo '<span style="color: red;">You are not checked in today or already checked out!</span>';
     } else {
         // Update check-out time
         $update_time_out = "UPDATE users SET check_out_time = '$check_out_time' WHERE user_id = '$user_id' AND date = '$date'";
         if ($con->query($update_time_out) === TRUE) {
-            echo "Time Out recorded successfully!";
+            echo '<span style="color: rgb(0, 255, 0) ;">time out recorded successfully</span>';
         } else {
-            echo "Error: " . $con->error; // Output error message if query fails
+          echo '<span style="color: red;">Error: ' . $con->error . '</span>'; // Output error message if query fails
         }
     }
 }
