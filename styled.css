@@ -1,0 +1,594 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: box-sizing;
+  }
+  /* Password container styling */
+.password-container {
+    position: relative;
+    margin-bottom: 20px; /* Adjust spacing as needed */
+}
+
+/* Eye icon styling */
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #777;
+    z-index: 2;
+}
+
+/* Adjust input padding to prevent text under icon */
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    padding-right: 40px; /* Make space for the icon */
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+  body {
+    font-family: sans-serif;
+    background-image: url("bg-img.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .logo-section {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    margin-left: 37%;
+  }
+  .logo-section img {
+    align-items: center;
+    width: 70%;
+    margin-top: 5rem;
+  }
+  
+  /* Log In CSS */
+  .form-login {
+    color: white;
+    position: absolute;
+    display: inline-block;
+    margin-left: 40%;
+    margin-top: 18%;
+    margin-right: 42%;
+  }
+  ::placeholder {
+    color: white;
+  }
+  .form-login input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    color: white;
+    border: 1px solid rgb(0, 208, 255);
+    background: gray;
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+  .forgot-password {
+    text-decoration: none;
+    color: white;
+    margin-left: 52%;
+  }
+  .forgot-password:hover {
+    color: rgb(0, 255, 0);
+  }
+  .form-button {
+    margin-top: 10px;
+    display: block;
+    align-items: center;
+    justify-content: center;
+  }
+  .form-button button {
+    padding: 12px;
+    border: 1px solid rgb(0, 208, 255);
+    border-radius: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    background: black;
+    color: white;
+  }
+  .form-button button:hover {
+    background: rgb(0, 255, 0);
+    color: black;
+    border: 1px solid white;
+  }
+  .form-button p {
+    margin-left: 1.2rem;
+  }
+  .form-button a {
+    color: white;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 3px;
+  }
+  .form-button a:hover {
+    color: rgb(0, 255, 0);
+  }
+  
+  .logo-sections {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    margin-left: 37%;
+  }
+  .logo-sections img {
+    align-items: center;
+    width: 70%;
+    margin-top: 2.8rem;
+  }
+  
+  /* Sign Up CSS */
+  
+  .form-signup {
+    color: white;
+    position: absolute;
+    display: inline-block;
+    margin-left: 40%;
+    margin-top: 14%;
+    margin-right: 42%;
+  }
+  ::placeholder {
+    color: white;
+  }
+  .form-signup input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    color: white;
+    border: 1px solid rgb(0, 162, 255);
+    background: gray;
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+  .signup-button {
+    margin-top: 10px;
+    display: block;
+    align-items: center;
+    justify-content: center;
+  }
+  .signup-button button {
+    padding: 12px;
+    border: 1px solid rgb(0, 208, 255);
+    border-radius: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    background: black;
+    color: white;
+  }
+  .signup-button button:hover {
+    background: rgba(0, 217, 255, 0.683);
+    color: black;
+    border: 1px solid white;
+  }
+  .signup-button p {
+    margin-left: 5%;
+  }
+  .signup-button a {
+    color: white;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 3px;
+  }
+  .signup-button a:hover {
+    color: rgb(0, 255, 0);
+  }
+  
+  /* LANDING PAGE CSS */
+  .navbar {
+    background: transparent;
+    margin-right: 3rem;
+    font-family: "Times New Roman", Times, serif;
+  }
+  .navbar a {
+    text-decoration: none;
+    color: white;
+  }
+  .navbar ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .navbar li {
+    list-style: none;
+    display: inline-block;
+  }
+  .navbar li a {
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .navbar a:hover {
+    color: rgb(0, 255, 0);
+  }
+  .navbar a:active {
+    color: rgb(0, 187, 255);
+  }
+  
+  .logo-left {
+    margin-left: 5rem;
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+  .logo-left img {
+    position: absolute;
+    width: 12%;
+    height: auto;
+  }
+  .land-text {
+    margin-top: 13%;
+    margin-left: 6%;
+    margin-right: 25%;
+    font-family: "Times New Roman", Times, serif;
+    color: white;
+  }
+  .land-text p {
+    font-size: 26px;
+    letter-spacing: 2px;
+  }
+  .land-text h1 {
+    letter-spacing: 3px;
+    font-size: 50px;
+  }
+  .one-name {
+    color: rgb(0, 255, 0);
+  }
+  .solo-one {
+    color: rgb(0, 255, 0);
+  }
+  .solo-two {
+    color: rgb(0, 187, 255);
+  }
+  .land-page-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    letter-spacing: 1px;
+    background: gray;
+    border: 2px solid rgb(0, 229, 255);
+    border-radius: 10px;
+  }
+  .land-text button:hover {
+    background: rgb(0, 255, 132);
+  }
+  .land-page-btn a {
+    text-decoration: none;
+    color: white;
+  }
+  .land-page-btn a:hover {
+    color: black;
+    font-weight: 600;
+  }
+.sidebar-toggle {
+
+    cursor: pointer;
+
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1001;
+    font-size: 24px;
+    color: white;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid rgb(0, 208, 255);
+}
+
+.sidebar {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: transparent;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    padding-top: 60px;
+    backdrop-filter: blur(5px);
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    padding: 15px;
+    border-bottom: 1px solid rgba(68, 68, 68, 0.5);
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.sidebar a:hover {
+    color: rgb(0, 255, 0);
+}
+
+.sidebar.active {
+    right: 0;
+}
+
+/* Close button for sidebar */
+.sidebar-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+  
+  /* Mobile-First Media Queries for Android */
+@media only screen and (max-width: 768px) {
+  /* Password container styling */
+.password-container {
+    position: relative;
+    margin-bottom: 20px; /* Adjust spacing as needed */
+}
+
+/* Eye icon styling */
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #777;
+    z-index: 2;
+}
+
+/* Adjust input padding to prevent text under icon */
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    padding-right: 40px; /* Make space for the icon */
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+  body {
+    background-size: auto 100%; /* Better fit for mobile screens */
+    background-attachment: fixed; /* Prevent background shift */
+  }
+
+  /* Logo Section Adjustments */
+  .logo-section, .logo-sections {
+    margin-left: 15% !important;
+    width: 70%;
+  }
+  .logo-section img, .logo-sections img {
+    width: 100%;
+    margin-top: 3rem;
+  }
+
+  /* Form Overhauls */
+  .form-login, .form-signup {
+    margin: 0 auto !important;
+    width: 80% !important;
+    left: 0;
+    right: 0;
+    top: 35vh;
+    padding: 20px;
+  }
+
+  /* Input Fields */
+  input {
+    font-size: 14px !important;
+    padding: 10px 15px !important;
+  }
+
+  /* Navigation */
+  .navbar ul {
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 10px;
+  }
+  .navbar li {
+    margin: 5px 0 !important;
+  }
+
+  /* Landing Page */
+  .logo-left img {
+    width: 30% !important;
+  }
+  .land-text {
+    margin-top: 40% !important;
+    margin-right: 10% !important;
+  }
+  .land-text h1 {
+    font-size: 2rem !important;
+  }
+  .land-text p {
+    font-size: 1rem !important;
+  }
+
+  /* Button Scaling */
+  button {
+    padding: 10px !important;
+    font-size: 14px;
+  }
+  .sidebar-toggle {
+        display: block !important;
+    }
+}
+.about-section {
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 800px;
+            color: white;
+            text-align: center;
+            border: 1px solid rgb(0, 255, 0);
+        }
+        
+        .about-section h2 {
+            color: rgb(0, 255, 0);
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .about-section p {
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+        }
+        
+        footer a {
+            color: rgb(0, 255, 0);
+            text-decoration: none;
+            font-size: 16px;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+/* Portrait Optimization */
+@media only screen and (max-width: 400px) and (orientation: portrait) {
+     about-section {
+                padding: 20px 15px;
+                margin: 15px;
+                border-radius: 5px;
+            }
+            
+            .about-section h2 {
+                font-size: 22px;
+                margin-bottom: 15px;
+            }
+            
+            .about-section p {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+            
+            footer {
+                padding: 15px;
+                margin-top: 20px;
+            }
+            
+            footer a {
+                font-size: 14px;
+            }
+  /* Password container styling */
+.password-container {
+    position: relative;
+    margin-bottom: 20px; /* Adjust spacing as needed */
+}
+
+/* Eye icon styling */
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #777;
+    z-index: 2;
+}
+
+/* Adjust input padding to prevent text under icon */
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    padding-right: 40px; /* Make space for the icon */
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+  .form-login, .form-signup {
+    top: 30vh !important;
+  }
+  .forgot-password {
+    margin-left: 40% !important;
+  }
+  .sidebar {
+        width: 200px;
+    }
+    .sidebar-toggle {
+        display: block !important;
+    }
+}
+
+/* Landscape Adjustments */
+@media only screen and (max-width: 768px) and (orientation: landscape) {
+  /* Password container styling */
+.password-container {
+    position: relative;
+    margin-bottom: 20px; /* Adjust spacing as needed */
+}
+
+/* Eye icon styling */
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #777;
+    z-index: 2;
+}
+
+/* Adjust input padding to prevent text under icon */
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    padding-right: 40px; /* Make space for the icon */
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+   .navbar {
+        display: none;
+    }
+    
+    .sidebar-toggle {
+        display: block;
+    }
+    
+    .land-text {
+        margin-top: 80px !important; /* Add space for the toggle button */
+    }
+    
+    /* Adjust logo position when sidebar is active */
+    .logo-left img {
+        width: 50% !important;
+        margin-left: 5%;
+    }
+}
+  .logo-section img {
+    margin-top: 1rem !important;
+    width: 80% !important;
+  }
+  .form-login, .form-signup {
+    top: 25vh !important;
+  }
+  .sidebar {
+        width: 220px;
+  }
+  .sidebar-toggle {
+        display: block !important;
+    }
+}
