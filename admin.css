@@ -1,16 +1,27 @@
+/* ==================== BASE STYLES ==================== */
 * {
   margin: 0;
   padding: 0;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  box-sizing: border-box;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
+
 body {
   background-image: url("bg-img.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+  min-height: 100vh;
 }
 
-/* Logo CSS*/
+/* ==================== LAYOUT STYLES ==================== */
+.container {
+  width: 80%;
+  margin: 30px auto;
+  padding: 20px;
+}
+
 .logo {
   position: absolute;
   padding: 20px;
@@ -20,23 +31,21 @@ body {
 .logo img {
   width: 45%;
   height: auto;
+  max-width: 200px;
 }
 
-/* Navbar CSS */
+/* ==================== NAVIGATION ==================== */
 .navbar {
   flex-grow: 4;
   padding-top: 35px;
   display: flex;
-  justify-content: center; /* Center navbar items */
+  justify-content: center;
 }
 
 .navbar ul {
   display: flex;
   list-style-type: none;
-}
-
-.navbar li {
-  margin: 0 15px;
+  gap: 20px;
 }
 
 .navbar a {
@@ -44,348 +53,219 @@ body {
   text-decoration: none;
   font-size: 18px;
   padding: 5px;
+  transition: all 0.3s ease;
 }
 
 .navbar a:hover {
-  border-bottom: 1px solid rgb(0, 255, 0); /* Underline CSS button*/
-}
-
-.top-head {
-  color: white;
-  display: flex;
-  margin-top: 5%;
-  margin-left: 80%;
-  margin-right: 6%;
-  margin-bottom: 20px;
-  justify-content: space-between;
-}
-.top-head h1 {
-  font-size: 16px;
-}
-
-/* Notifications Style */
-.notif-left {
-  position: absolute;
-  color: white;
-  margin-top: 5%;
-}
-.notif-left h1 {
-  font-size: 25px;
-  padding: 10px;
-  border-bottom: 2px solid rgb(0, 255, 0);
-  margin-left: 1.4rem;
-  margin-right: 83%;
-}
-
-.notif-down {
-  padding: 20px;
-}
-.notif-down h2 {
-  padding: 20px;
-  width: 71.3rem;
   border-bottom: 2px solid rgb(0, 255, 0);
 }
 
-/* Offline and Online Styles*/
-
-.status-container {
-  display: flex;
-  flex-direction: column;
-  border-left: 2px solid rgb(0, 255, 0);
-  margin-left: 75rem;
-  height: 65.4vh;
-  padding: 20px;
-}
-
-.status-item {
-  display: flex;
-  align-items: center;
-  padding: 10px 10px 10px 10px;
-  gap: 20px;
-}
-.status-item img {
-  width: 45px;
-  height: auto;
-  margin-right: 20px;
-  border-radius: 50%;
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  transition: background-color 0.5s ease;
-}
-
-.status-text {
-  font-size: 14px;
-}
-
-.name {
-  display: contents;
-  color: white;
-  font-size: 15px;
-  margin-bottom: 20px;
-  font-weight: normal;
-}
-
-.status-text-online {
-  color: green;
-}
-
-.status-text-offline {
-  color: red;
-}
-
-.online {
-  background-color: green;
-}
-
-.offline {
-  background-color: red;
-}
-
-/* Attendance Monitoring */
-
-.attendance-containers {
-  max-width: 80%;
-  margin: 0 auto;
-  background: transparent;
+/* ==================== ATTENDANCE RECORDS ==================== */
+.employee-list {
+  background-color: rgba(42, 42, 42, 0.8);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.attendance-containers h1 {
-  text-align: center;
+.employee-list h3 {
+  color: white;
+  border-bottom: 2px solid rgb(0, 255, 0);
+  padding-bottom: 10px;
   margin-bottom: 20px;
-  font-size: 1.8rem;
-  color: white;
 }
 
-.employee-profile {
+.employee-buttons-container {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  background-color: transparent;
-  padding: 15px;
-  margin-bottom: 50px;
-  /* Increased gap between rows */
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.profile-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.profile-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.employee-details {
-  font-size: 1rem;
-}
-
-.employee-details strong {
-  display: block;
-  font-size: 1.1rem;
-  color: white;
-}
-
-.employee-details p {
-  font-size: 0.9rem;
-  color: whitesmoke;
-}
-
-.attendance-info {
-  display: none;
-  /* Hide by default */
-  width: 100%;
-  margin-top: 10px;
-}
-
-.attendance-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.attendance-table th,
-.attendance-table td {
-  padding: 10px;
-  color: white;
-  border: 1px solid rgb(0, 255, 0);
-  text-align: center;
-}
-
-.attendance-table th {
-  background-color: transparent;
-}
-
-.attendance-button {
-  padding: 10px 15px;
+.employee-button {
+  display: inline-block;
+  padding: 10px 20px;
   background-color: rgb(0, 255, 0);
   color: black;
-  border: none;
-  width: 100%;
+  text-decoration: none;
   border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.attendance-button:hover {
-  background-color: gray;
-  color: white;
+.employee-button:hover {
+  background-color: rgb(0, 200, 0);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Payroll DropDown */
-
-.container {
-  width: 80%;
-  margin: 30px auto;
-  background: transparent;
-  padding: 20px;
-}
-
-.container h1 {
-  text-align: center;
-  color: #ffffff;
-}
-
-.employee-container {
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  background: transparent;
-  padding: 15px;
+/* Attendance Records Table */
+.attendance-record {
+  background-color: rgba(42, 42, 42, 0.8);
+  padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-}
-.attendance-row {
-  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin-top: 30px;
 }
 
-.profile {
-  display: flex;
-  align-items: center;
+.attendance-record h3 {
+  color: white;
+  border-bottom: 2px solid rgb(0, 255, 0);
+  padding-bottom: 10px;
   margin-bottom: 20px;
 }
 
-.profile img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.profile .name {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.dropdown-container .attendance-row {
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 0;
-  padding: 15px 0;
-  border-bottom: 1px solid #3cff00;
-}
-
-.dropdown-container .attendance-row:last-child {
-  border-bottom: none;
-}
-
-.dropdown-container p {
-  font-size: 16px;
-  margin: 0;
-}
-
-.dropdown-container .label {
-  font-weight: bold;
-}
-
-.toggle-button {
-  padding: 10px 15px;
-  background-color: rgb(0, 255, 0);
-  color: black;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 5px;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.toggle-button:hover {
-  background-color: gray;
-  color: black;
-}
-
-/* NOTIF CSS */
-
-/* Centering the container on the screen */
-.containerd {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 90%;
-  max-width: 300px;
-}
-
-/* Styling the heading */
-.heading {
-  text-align: center;
-  color: white;
-  font-size: 24px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-/* Styling the table */
 .leave-table {
-  width: 80%;
-  margin-left: 10%;
+  width: 100%;
   border-collapse: collapse;
-  font-size: 16px;
+  margin: 20px 0;
 }
 
-.leave-table th,
+.leave-table th, 
 .leave-table td {
-  padding: 10px;
-  text-align: center;
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid rgb(0, 255, 0);
 }
 
 .leave-table th {
-  background-color: rgb(0, 255, 0);
-  border: 1px solid rgb(0, 255, 0);
-  color: black;
+  background-color: rgba(0, 255, 0, 0.2);
+  color: white;
+  font-weight: bold;
 }
 
-.leave-table td {
-  border: 1px solid rgb(0, 255, 0);
+.leave-table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
-.leave-table a {
-  color: #007bff;
+.leave-table tr:hover {
+  background-color: rgba(0, 255, 0, 0.1);
+}
+
+/* Action Links */
+.action-links a {
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
   text-decoration: none;
+  font-weight: bold;
+  margin-right: 5px;
+  transition: all 0.3s ease;
 }
 
-.leave-table a:hover {
+.action-links a:first-child {
+  color: rgb(0, 255, 0);
+}
+
+.action-links a:last-child {
+  color: rgb(255, 100, 100);
+}
+
+.action-links a:hover {
   text-decoration: underline;
 }
-/* ==================== MEDIA QUERIES ==================== */
 
-/* For large smartphones (576px - 768px) */
+/* Add Record Button */
+.add-record-btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: rgb(0, 255, 0);
+  color: black;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.add-record-btn:hover {
+  background-color: rgb(0, 220, 0);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Status Indicators */
+.status-ontime {
+  color: #00ff00;
+}
+
+.status-late {
+  color: #ff9900;
+}
+
+.status-undertime {
+  color: #ff6600;
+}
+
+.status-absent {
+  color: #ff0000;
+}
+
+/* ==================== UTILITY STYLES ==================== */
+.no-employees {
+  background: rgba(244, 67, 54, 0.8);
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.debug-info {
+  background: rgba(255, 235, 59, 0.9);
+  color: #000;
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 5px;
+  font-family: monospace;
+}
+.emp {
+  text-decoration: none;
+  color: rgb(0,255,0);
+    flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* space between employee buttons */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    justify-content: center; /* center the employee buttons */
+    
+}
+
+.employee-button {
+    background-color: #111; /* dark background for button */
+    color: rgb(0, 255, 0); /* bright green text */
+    padding: 10px 20px;
+    border: 1px solid rgb(0, 255, 0);
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s ease; /* smooth hover effect */
+}
+
+.employee-button:hover {
+    background-color: rgb(0, 255, 0);
+    color: #111;
+    transform: scale(1.05); /* slight zoom when hovered */
+}
+
+/* ==================== RESPONSIVE STYLES ==================== */
+@media (max-width: 1024px) {
+  .container {
+    width: 90%;
+  }
+  
+  .logo {
+    left: 5%;
+  }
+  
+  .logo img {
+    width: 40%;
+  }
+}
+
 @media (max-width: 768px) {
   body {
     background-size: auto;
@@ -395,11 +275,12 @@ body {
   .logo {
     position: static;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
   }
   
   .logo img {
     width: 30%;
+    max-width: 150px;
   }
   
   .navbar {
@@ -407,57 +288,23 @@ body {
   }
   
   .navbar ul {
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   
-  .navbar li {
-    margin: 5px 0;
-  }
-  
-  .container, .attendance-containers {
+  .container {
     width: 95%;
     margin: 15px auto;
-    padding: 10px;
+    padding: 15px;
   }
   
-  .status-container {
-    margin-left: 0;
-    height: auto;
-    border-left: none;
-    border-top: 2px solid rgb(0, 255, 0);
-    padding: 10px;
-  }
-  
-  .employee-container {
-    padding: 10px;
-  }
-  
-  .profile {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .profile img {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-  
-  .dropdown-container .attendance-row {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 10px 0;
-  }
-  
-  .leave-table {
-    width: 100%;
-    margin-left: 0;
+  .leave-table th, 
+  .leave-table td {
+    padding: 8px 10px;
     font-size: 14px;
   }
 }
 
-/* For small smartphones (up to 576px) */
 @media (max-width: 576px) {
   .logo img {
     width: 40%;
@@ -467,85 +314,101 @@ body {
     font-size: 16px;
   }
   
-  .container h1, .attendance-containers h1 {
-    font-size: 1.4rem;
-  }
-  
-  .profile .name {
-    font-size: 18px;
-  }
-  
-  .dropdown-container p {
+  .employee-button, 
+  .add-record-btn {
+    padding: 8px 15px;
     font-size: 14px;
   }
   
-  .toggle-button, .attendance-button {
-    padding: 8px 12px;
-    font-size: 14px;
-  }
-  
-  .attendance-table th, 
-  .attendance-table td {
-    padding: 5px;
-    font-size: 12px;
-  }
-  
-  .notif-left h1 {
-    font-size: 20px;
-    margin-right: 60%;
-  }
-  
-  .notif-down h2 {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-  }
-}
-/* Specific fix for Itel RS4 and similar small devices */
-@media (max-width: 400px) {
-  .profile {
-    flex-direction: column;
-    align-items: center; /* Center everything inside profile */
-    text-align: center;
-  }
-
-  .profile img {
-    margin-right: 0; /* Remove right margin */
-    margin-bottom: 8px; /* Add space below image */
-  }
-
-  .name {
-    display: block; /* Change from 'contents' to block for better centering */
-    width: 100%;
-    text-align: center;
-    margin-top: 5px;
-  }
-    .logo img {
-
-    width: 50%;
-
-  }
-  
-  .navbar a {
-    font-size: 14px;
-  }
-  
-  .container h1, .attendance-containers h1 {
-    font-size: 1.2rem;
-  }
-    .dropdown-container p {
-
-    font-size: 12px;
-
-  }
-  
-  .toggle-button, .attendance-button {
-    padding: 6px 10px;
-    font-size: 12px;
-  }
-  
-  .attendance-table {
+  .leave-table {
     display: block;
     overflow-x: auto;
+  }
+  
+  .leave-table th, 
+  .leave-table td {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+}
+@media (max-width: 468px) {
+  .logo img {
+    width: 50%;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+.emp{
+  color: rgb(0, 220, 0);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* space between employee buttons */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    justify-content: center; /* center the employee buttons */
+}
+
+.employee-button {
+    background-color: #111; /* dark background for button */
+    color: rgb(0, 255, 0); /* bright green text */
+    padding: 10px 20px;
+    border: 1px solid rgb(0, 255, 0);
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s ease; /* smooth hover effect */
+}
+
+.employee-button:hover {
+    background-color: rgb(0, 255, 0);
+    color: #111;
+    transform: scale(1.05); /* slight zoom when hovered */
+}
+  .employee-list {
+    color: rgb(0, 220, 0);
+    padding: 10px;
+    text-align: center;
+  }
+
+  .employee-list h3 {
+    font-size: 18px;
+  }
+
+  .employee-buttons-container,
+  .employee-list > div {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .employee-button {
+    width: 90%;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .attendance-record {
+    padding: 10px;
+  }
+
+  .attendance-record h3 {
+    font-size: 18px;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  table thead tr th,
+  table tbody tr td {
+    padding: 8px;
+  }
+
+  a[href*="add_record.php"] {
+    width: 100%;
+    text-align: center;
+    display: block;
   }
 }
