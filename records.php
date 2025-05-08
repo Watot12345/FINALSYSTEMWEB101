@@ -1,130 +1,174 @@
 <?php
 session_start();
-include 'con.php';
+include 'connect.php';
 
-// Error reporting for development
+// Enable error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Fetch Employees
+// Test database connection
+if (!$con) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
 
-$employees = $con->query("
-    SELECT DISTINCT id, full_name 
-    FROM users  WHERE role = 'employee' 
-    AND date IS NOT NULL 
-    AND date != '0000-00-00'
-");
+// Count employees
+$employeeQuery = $con->query("SELECT COUNT(DISTINCT full_name) as emp_count FROM users WHERE role = 'employee'");
+$employeeResult = $employeeQuery->fetch_assoc();
+$employeeCount = $employeeResult['emp_count'] ?? 0;
 
+// Helper functions
 function convertTo12HourFormat($time) {
-    if (empty($time) || $time == '00:00:00') {
-        return 'N/A';
-    }
+    if (empty($time) || $time == '00:00:00') return 'N/A';
     return date('h:i:s A', strtotime($time));
 }
 
 function convertToFullDate($date) {
-    if (empty($date) || $date == '0000-00-00') {
-        return 'N/A';
-    }
+    if (empty($date) || $date == '0000-00-00') return 'N/A';
     return date('F j, Y', strtotime($date));
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Attendance Record</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="admin.css">
     <link rel="shortcut icon" href="Icon.png" type="image/x-icon">
+    <style>
+    .emp {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+    justify-content: center;
+    align-items: center; /* vertically center items if they have different heights */
+    width: 100%; /* ensure full width */
+}
+
+/* Style for the employee buttons */
+.emp .employee-button {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #333;
+    color: #00ff00;
+    text-decoration: none;
+    border: 1px solid #00ff00;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 120px; /* ensures buttons have consistent width */
+}
+
+.emp .employee-button:hover {
+    background-color: #00ff00;
+    color: #000;
+    font-weight: bold;
+}
+
+/* Active/current employee button */
+.emp .employee-button.active {
+    background-color: #00ff00;
+    color: #000;
+    font-weight: bold;
+}
+    </style>
 </head>
 <body>
     <div class="logo">
-        <img src="Logo.png" alt="">
+        <img src="Logo.png" alt="Company Logo">
     </div>
+
     <div class="container">
         <h1>Employee Attendance Record</h1>
-<br><br><br>
-        <!-- Employee List -->
+        <br><br>
         <div class="employee-list">
-            <h3 style="color: white; margin-bottom: 15px; border-bottom: 2px solid rgb(0, 255, 0); padding-bottom: 5px;">Employee List:</h3>
-            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                <?php while ($row = $employees->fetch_assoc()): ?>
-                    <a href="?user_id=<?php echo $row['id']; ?>" 
-                       style="display: inline-block; 
-                              padding: 8px 15px;
-                              background-color: rgb(0, 255, 0);
-                              color: black;
-                              text-decoration: none;
-                              border-radius: 5px;
-                              margin-bottom: 10px;">
-                        <?php echo htmlspecialchars($row['full_name']); ?>
-                    </a>
-                <?php endwhile; ?>
-            </div>
+            <h4 style="color: white; border-bottom: 2px solid #00ff00;">Employee List:</h4>
+<div></div>
+            <?php if ($employeeCount > 0): ?>
+                <?php
+                // Fetch employees with attendance records
+                $employees = $con->query("
+                    SELECT full_name, MIN(id) as id, COUNT(*) as record_count
+                    FROM users
+                    WHERE role = 'employee' AND date IS NOT NULL AND date != '0000-00-00'
+                    GROUP BY full_name
+                    ORDER BY full_name
+                ");
+                ?>
+
+                <?php if ($employees && $employees->num_rows > 0): ?>
+                    <div class="emp">
+                        <?php while ($emp = $employees->fetch_assoc()): ?>
+                            <a href="?user_id=<?php echo (int)$emp['id']; ?>" class="employee-button">
+                                <?php echo htmlspecialchars($emp['full_name']); ?> (<?php echo $emp['record_count']; ?>)
+                            </a>
+                        <?php endwhile; ?>
+                    </div>
+                <?php else: ?>
+                    <p class="no-employees">No employees found.</p>
+                <?php endif; ?>
+            <?php else: ?>
+                <p class="no-employees">No employees in database.</p>
+            <?php endif; ?>
         </div>
 
-        <!-- Attendance Record -->
         <?php if (isset($_GET['user_id'])): ?>
             <?php
             $employee_id = (int)$_GET['user_id'];
-            
-            // Get employee name first
-            $stmt = $con->prepare("SELECT full_name FROM users WHERE id = ?");
-            $stmt->bind_param("i", $employee_id);
-            $stmt->execute();
-            $employee_result = $stmt->get_result();
-            $employee = $employee_result->fetch_assoc();
-            $employee_name = $employee['full_name'] ?? 'Unknown Employee';
-            
-            // Get attendance records (only where date is not empty)
-            $stmt = $con->prepare("SELECT * FROM users WHERE id = ? AND date IS NOT NULL AND date != '0000-00-00' ORDER BY date DESC");
-            $stmt->bind_param("i", $employee_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
+
+            // Fetch employee full name
+            $employee = $con->query("SELECT full_name FROM users WHERE id = $employee_id AND role = 'employee' LIMIT 1")->fetch_assoc();
+
+            if ($employee):
+                // Fetch attendance records from users table itself
+                $records = $con->query("
+                    SELECT * FROM users
+                    WHERE full_name = '" . $con->real_escape_string($employee['full_name']) . "' 
+                      AND role = 'employee' 
+                      AND date IS NOT NULL 
+                      AND date != '0000-00-00'
+                    ORDER BY date DESC
+                ");
             ?>
             <div class="attendance-record" style="margin-top: 30px;">
-                <h3 style="color: white; margin-bottom: 15px; border-bottom: 2px solid rgb(0, 255, 0); padding-bottom: 5px;">
-                    <?php echo htmlspecialchars($employee_name); ?>'s Attendance Records
+                <h3 style="color: white; border-bottom: 2px solid #00ff00;">
+                    <?php echo htmlspecialchars($employee['full_name']); ?>'s Attendance Records
                 </h3>
-                <table class="leave-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time In</th>
-                            <th>Time Out</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody style="color: white;">
-                        <?php if ($result->num_rows > 0) : ?>
-                            <?php while ($record = $result->fetch_assoc()): ?>
+
+                <?php if ($records && $records->num_rows > 0): ?>
+                    <table style="width: 100%; color: white; margin-top: 20px;">
+                        <thead style="background-color: #333;">
                             <tr>
-                                <td><?php echo convertToFullDate($record['date']); ?></td>
-                                <td><?php echo convertTo12HourFormat($record['check_in_time']); ?></td>
-                                <td><?php echo convertTo12HourFormat($record['check_out_time']); ?></td>
-                                <td><?php echo htmlspecialchars($record['status']); ?></td>
-                                <td class="action-links">
-                                    <a href="edit.php?id=<?php echo $record['id']; ?>" style="color: rgb(0, 255, 0);">Edit</a> | 
-                                    <a href="delete.php?id=<?php echo $record['id']; ?>" 
-                                       style="color: rgb(255, 0, 0);" 
-                                       onclick="return confirm('Are you sure you want to delete this record?');">
-                                        Delete
-                                    </a>
-                                </td>
+                                <th style="padding: 10px;">Date</th>
+                                <th style="padding: 10px;">Time In</th>
+                                <th style="padding: 10px;">Time Out</th>
+                                <th style="padding: 10px;">Status</th>
+                                <th style="padding: 10px;">Action</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($record = $records->fetch_assoc()): ?>
+                                <tr style="border-bottom: 1px solid #444;">
+                                    <td style="padding: 10px;"><?php echo convertToFullDate($record['date']); ?></td>
+                                    <td style="padding: 10px;"><?php echo convertTo12HourFormat($record['check_in_time']); ?></td>
+                                    <td style="padding: 10px;"><?php echo convertTo12HourFormat($record['check_out_time']); ?></td>
+                                    <td style="padding: 10px;"><?php echo htmlspecialchars($record['status']); ?></td>
+                                    <td style="padding: 10px;">
+                                        <a href="edit.php?id=<?php echo (int)$record['id']; ?>" style="color: #00ff00;">Edit</a> | 
+                                        <a href="delete.php?id=<?php echo (int)$record['id']; ?>" style="color: #ff0000;" onclick="return confirm('Are you sure?')">Delete</a>
+                                    </td>
+                                </tr>
                             <?php endwhile; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="5" style="text-align: center; color: white;">No attendance records found</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <p style="color: white;">No attendance records found for this employee.</p>
+                <?php endif; ?>
             </div>
+            <?php else: ?>
+                <p class="no-employees">Employee not found.</p>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
 </body>

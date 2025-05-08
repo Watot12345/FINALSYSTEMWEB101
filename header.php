@@ -1,14 +1,12 @@
 <?php
 session_start();
-
+include 'connect.php';
 if (!isset($_SESSION['user_id'])) {
       $_SESSION['error'] = "Error: Login First"; // Store error message in session
       header("Location: login-ad-use.php"); // Redirect to login page
       exit();
   }
 ?>
-<?php
-include 'con.php';
 
 <!DOCTYPE html>
 <html lang="en">

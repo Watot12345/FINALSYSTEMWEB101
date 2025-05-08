@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login-ad-use.php");
     exit();
 }
-include 'con.php';
+include 'connect.php';
 
 // Configuration
 $regular_hours_per_day = 8;

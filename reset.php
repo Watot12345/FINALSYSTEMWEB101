@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'con.php';
+include 'connect.php';
 
 // Handle password reset request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

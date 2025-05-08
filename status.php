@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Database connection
-include 'con.php';
+include 'connect.php';
 // Get all leave requests for this user
 $user_id = $_SESSION['user_id'];
 $stmt = $con->prepare("SELECT leave_type, start_date, end_date, reason, stat  FROM users WHERE user_id = ? AND leave_type IS NOT NULL ORDER BY start_date DESC");

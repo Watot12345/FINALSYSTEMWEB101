@@ -1,6 +1,29 @@
 <?php
 session_start();
-include 'con.php';
+include 'connect.php';
+// Spam prevention (30-second cooldown)
+
+if (!isset($_SESSION['last_attempt'])) {
+
+    $_SESSION['last_attempt'] = 0; // Initialize
+}
+
+$current_time = time();
+$cooldown = 10; // 30 seconds
+
+// Check if user is spamming (if last attempt was <30s ago)
+if ($current_time - $_SESSION['last_attempt'] < $cooldown) {
+    $remaining = $cooldown - ($current_time - $_SESSION['last_attempt']);
+    die("Please wait $remaining seconds before trying again.");
+}
+
+// Only update last_attempt AFTER successful form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
+    $_SESSION['last_attempt'] = $current_time; // Update timestamp
+    // Rest of your registration logic...
+}
+
+
 // Function to confirm password
 function confirmPassword($password, $confirmPassword) {
     return $password === $confirmPassword;
@@ -75,8 +98,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     <title>Siglatrolap Innovation Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="Icon.png" type="image/x-icon">
+    
+    <script src="https://unpkg.com/html5-qrcode"></script>
     <link rel="stylesheet" href="styled.css">
     <style>
+        .login-options {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .login-options button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background: #f0f0f0;
+        transition: all 0.3s;
+    }
+
+    .login-options button.active {
+        background: #4CAF50;
+        color: white;
+    }
+
+    #qrLoginForm {
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    #reader {
+        width: 500px;
+        margin: 0 auto;
+    }
+
+    #qrMessage {
+        margin-top: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
       /* Password container styling */
 .password-container {
     position: relative;
@@ -135,6 +198,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     border-color: #4a90e2;
     box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
+      
+</style>
     </style>
 </head>
 <body>
@@ -143,7 +208,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     </div>
 
     <section class="form-login">
-        <form action="login-ad-use.php" method="post">
+    <div class="login-options">
+        <button id="manualLoginBtn" class="active"><i class="fas fa-keyboard"></i> Manual Login</button>
+        <button id="qrLoginBtn"><i class="fas fa-qrcode"></i> QR Code Login</button>
+    </div>
+    <form action="login-ad-use.php" method="post" id="manualLoginForm">
             <div>
  <div class="input-container">
     <label for="username">Username:</label>
@@ -172,10 +241,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                 <br><br>
                 <hr><br>
                 <button type="button"><i class="fab fa-google"></i>&nbsp;&nbsp;Connect to Gmail</button>
-                <p>&nbsp;<i class="fas fa-user-check"></i>&nbsp;&nbsp;Not Registered? <a href="signup-ad-use.php">&nbsp;Create Account</a></p>
+                <p>&nbsp;<i class="fas fa-user-check"></i>&nbsp;&nbsp;Not Registered? <a href="index.php">&nbsp;Create Account</a></p>
             </div>
         </form>
+        <div id="qrLoginForm" style="display: none; text-align: center;">
+        <div id="reader"></div>
+        <div id="qrMessage"></div>
+    </div>
     </section>
+    <script>
+let html5QrcodeScanner;
+
+function initQRScanner() {
+    if (html5QrcodeScanner) {
+        html5QrcodeScanner.clear();
+    }
+    
+    html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader",
+        { 
+            fps: 10, 
+            qrbox: { width: 250, height: 250 },
+            rememberLastUsedCamera: true
+        }
+    );
+        
+    html5QrcodeScanner.render((qrCodeMessage) => {
+        // On success
+        fetch('verify-qr.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ qr_secret: qrCodeMessage })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = 'home.php';
+            } else {
+                document.getElementById('qrMessage').innerHTML = 
+                    '<p style="color: red;">Invalid QR Code</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('qrMessage').innerHTML = 
+                '<p style="color: red;">Error scanning QR code</p>';
+        });
+    }, (error) => {
+        console.warn(`QR error: ${error}`);
+    });
+}
+
+// Switch between login methods
+document.getElementById('qrLoginBtn').addEventListener('click', function() {
+    this.classList.add('active');
+    document.getElementById('manualLoginBtn').classList.remove('active');
+    document.getElementById('manualLoginForm').style.display = 'none';
+    document.getElementById('qrLoginForm').style.display = 'block';
+    initQRScanner();
+});
+
+document.getElementById('manualLoginBtn').addEventListener('click', function() {
+    this.classList.add('active');
+    document.getElementById('qrLoginBtn').classList.remove('active');
+    document.getElementById('manualLoginForm').style.display = 'block';
+    document.getElementById('qrLoginForm').style.display = 'none';
+    if (html5QrcodeScanner) {
+        html5QrcodeScanner.clear();
+    }
+});
+</script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -206,6 +344,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             });
         });
     </script>
+  
 </body>
 </html>
 

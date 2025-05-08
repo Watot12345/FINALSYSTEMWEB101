@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login-ad-use.php"); // Redirect to login page
     exit();
 }
-include 'con.php';
+include 'connect.php';
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +61,50 @@ include 'con.php';
         <button class="land-page-btn">
             <a href="about.html">ABOUT US</a></a>
         </button>
+  
+  
+  
+      <header class="header">
+            <div class="logo">
+      <section id="land-page1" class="landpage1"> <!-- 1st Page 1 -->
+            <h1><span style="color: BLUE; font-weight:800;">EASY&nbsp;</span>TO&nbsp;<span
+                        style="color: rgb(0, 255, 0); font-weight:800; padding: 20px;">MANAGE&nbsp;</span>YOUR</h1>
+            <br><br><br>
+            <h1>DAILY&nbsp;<span style="color: blue; font-weight:800; padding: 20px;">TIME IN&nbsp;</span>AND&nbsp;<span
+                        style="color: rgb(0, 255, 0); font-weight:800;">TIME OUT</span></h1>
+            <img src="image/landpage1.png" alt="">
+      </section>
+
+
+
+      <section id="land-page2" class="landpage2"> <!-- 2nd Page 2 -->
+            <h1>YOU CAN ABLE TO&nbsp;<br><span style="color: BLUE; font-weight:800; padding-left: 10%;">
+                        ACCESS&nbsp;</span>YOUR&nbsp;<span
+                        style="color: rgb(0, 255, 0); font-weight:800;">PAYROL&nbsp;</span>
+            </h1><br><br><br><br><br><br><br><br>
+            <h1>TO SEE YOUR &nbsp;<span style="color: red; font-weight:800;">EARNINGS</span></h1>
+            <img src="image/landpage2.png" alt="">
+      </section>
+
+
+
+      <section id="land-page3" class="landpage3"> <!-- 3rd Page 3 -->
+            <h1>INFORMING YOUR DAILY TIME RECORD</h1>
+            <h2>ACCURATELY WITH NOTIFICATIONS</h2>
+            <img src="landpage3.png" alt="">
+      </section>
+      <footer class="footer"> <!-- Footer -->
+            <h1>All Rights Reserved @2025</h1>
+            <a href="">Privacy Policy</a>
+            <h2>Need Help? Contact Us</h2>
+            <h3>Support</h3>
+            <h4>siglatrolapinnovations@gmail.com</h4>
+      </footer>
     </div>
+    
+    
+    
+    
     <script>
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.querySelector('.sidebar-toggle');

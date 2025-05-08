@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login-ad-use.php"); // Redirect to login page
     exit();
 }
-include 'con.php';
+include 'connect.php';
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
